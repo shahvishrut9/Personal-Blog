@@ -1,20 +1,24 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import PortableText from "react-portable-text";
 import Script from "next/script";
 import Link from "next/link";
 import { createClient } from "next-sanity";
 import { useEffect } from "react";
 import imageUrlBuilder from "@sanity/image-url";
 
-export default function Home({ blog }) {
+export default function Home({ blog, profile }) {
   const myConfiguredSanityClient = createClient({
     projectId: "jm2xwjzr",
     dataset: "production",
     useCdn: false,
   });
   const builder = imageUrlBuilder(myConfiguredSanityClient);
+  // const profile = {
+  //   title: "Vishrut",
+  //   name: "Vishrut",
+  //   image: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fa4%2F55%2F75%2Fa45575e9f1e6cca6634e2e9a47c9bb36.jpg&f=1&nofb=1"
+  // }
 
   useEffect(() => {
     console.log(builder.image(blog[0].image));
@@ -33,7 +37,7 @@ export default function Home({ blog }) {
           name="viewport"
         />
 
-        <title>Homepage | Atom Template</title>
+        <title>{profile.title} - Data Analyst</title>
 
         <meta property="og:title" content="Homepage | Atom Template" />
 
@@ -171,7 +175,7 @@ export default function Home({ blog }) {
                 </li>
 
                 <li className="group pl-6">
-                  <a href="#blog">
+                  <a href="./blog">
                   <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
                     Blog
                   </span></a>
@@ -270,14 +274,14 @@ export default function Home({ blog }) {
               <div className="flex flex-col items-center justify-center lg:flex-row">
                 <div className="rounded-full border-8 border-primary shadow-xl">
                   <img
-                    src="/assets//img/blog-author.jpg"
+                    src= {builder.image(profile.image).width(200).url()}
                     className="h-48 rounded-full sm:h-56"
                     alt="author"
                   />
                 </div>
                 <div className="pt-8 sm:pt-10 lg:pl-8 lg:pt-0">
                   <h1 className="text-center font-header text-4xl text-white sm:text-left sm:text-5xl md:text-6xl">
-                    Hello I'm Christy Smith!
+                    Hello I'm {profile.name}
                   </h1>
                   <div className="flex flex-col justify-center pt-3 sm:flex-row sm:pt-5 lg:justify-start">
                     <div className="flex items-center justify-center pl-0 sm:justify-start md:pl-1">
@@ -1163,11 +1167,15 @@ export async function getServerSideProps(context) {
     dataset: "production",
     useCdn: false,
   });
-  const query = `*[_type == "blog"]`;
+  const query = `*[_type == "blog"][0...3]`;
   const blog = await client.fetch(query);
+
+  const profileQuery = `*[_type == "profile"][0]`;
+  const profile = await client.fetch(profileQuery)
   return {
     props: {
       blog,
+      profile
     },
   };
 }

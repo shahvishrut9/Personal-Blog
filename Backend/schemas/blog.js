@@ -57,6 +57,17 @@ export default {
       ]
     },
 
+    // Tags
+    {
+      title: 'Tags',
+      name: 'tags',
+      type: 'array',
+      of: [{type: 'string'}],
+      options: {
+        layout: 'tags'
+      }
+    },
+
     // Time
     { 
       title: 'Time field',
