@@ -5,6 +5,8 @@ import createSchema from 'part:@sanity/base/schema-creator'
 import schemaTypes from 'all:part:@sanity/base/schema-type'
 import blog from './blog.js'
 import profile from './profile.js'
+import skills from './skills.js'
+import socialhandles from './socialhandles.js'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -13,6 +15,6 @@ export default createSchema({
   // Then proceed to concatenate our document type
   // to the ones provided by any plugins that are installed
   types: schemaTypes.concat([
-    blog,profile
+    blog,profile,skills, socialhandles
   ]),
 })

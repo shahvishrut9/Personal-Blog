@@ -1,43 +1,50 @@
+// Color pallete
+// #1A1A1D : rgb(26, 26, 29)
+// #4E4E50 : rgb(78, 78, 80)
+// #6F2232 : rgb(111, 34, 50)
+// #950740 : rgb(149, 7, 80)
+// #C3073F : rgb(195, 7, 63)
+// #070e18
+
+// Next js compenents
 import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
 import Script from "next/script";
 import Link from "next/link";
+import PortableText from "react-portable-text";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
+// import ButtonMailto from "../components/buttonMailto";
+
+// CSS for Home page
+// import styles from "../styles/Home.module.css";
+
+// Sanity associated modules
 import { createClient } from "next-sanity";
-import { useEffect } from "react";
 import imageUrlBuilder from "@sanity/image-url";
 
-export default function Home({ blog, profile }) {
+export default function Home({ blog, profile, social, skills }) {
+
   const myConfiguredSanityClient = createClient({
     projectId: "jm2xwjzr",
     dataset: "production",
     useCdn: false,
   });
   const builder = imageUrlBuilder(myConfiguredSanityClient);
-  // const profile = {
-  //   title: "Vishrut",
-  //   name: "Vishrut",
-  //   image: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fa4%2F55%2F75%2Fa45575e9f1e6cca6634e2e9a47c9bb36.jpg&f=1&nofb=1"
-  // }
-
-  useEffect(() => {
-    console.log(builder.image(blog[0].image));
-  }, []);
 
   return (
     <>
       <Script src="/assets//js/main.js"></Script>
       <Head>
-        <meta charset="utf-8" />
+        <meta charSet="utf-8" />
 
-        <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+        <meta content="IE=edge,chrome=1" httpEquiv="X-UA-Compatible" />
 
         <meta
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
           name="viewport"
         />
 
-        <title>{profile.title} - Data Analyst</title>
+        <title>{profile.title}</title>
 
         <meta property="og:title" content="Homepage | Atom Template" />
 
@@ -65,7 +72,7 @@ export default function Home({ blog, profile }) {
         <meta name="twitter:site" content="@tailwindmade" />
 
         <link
-          crossorigin="crossorigin"
+          crossOrigin="crossorigin"
           href="https://fonts.gstatic.com"
           rel="preconnect"
         />
@@ -80,14 +87,15 @@ export default function Home({ blog, profile }) {
           href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Raleway:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
-
+        {/* social media icons from here. */}
         <link
-          href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+          href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
           rel="stylesheet"
         />
 
+        {/* Style sheets import here */}
         <link
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
           href="/assets//styles/main.min.css"
           media="screen"
           rel="stylesheet"
@@ -102,189 +110,42 @@ export default function Home({ blog, profile }) {
           defer
           src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
         ></Script>
+
+        <Script src="/assets//js//main.js"></Script>
       </Head>
 
       {/* ==================================================== */}
-
       <div id="main" className="relative">
-        <div className="w-full z-50 top-0 py-3 sm:py-5  absolute">
-          <div className="container flex items-center justify-between">
-            <div>
-              <a href="/">
-                <img
-                  src="/assets//img/logo.svg"
-                  className="w-24 lg:w-48"
-                  alt="logo image"
-                />
-              </a>
-            </div>
-            <div className="hidden lg:block">
-              <ul className="flex items-center">
-                <li className="group pl-6">
-                  <a href= '#about'>
-                  <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                    About
-                  </span></a>
 
-                  <span className="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
-                </li>
+        <NavBar />
 
-                <li className="group pl-6">
-                  <a href="#services">
-                  <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                    Services
-                  </span></a>
-
-                  <span className="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
-                </li>
-
-                <li className="group pl-6">
-                  <a href="#portfolio">
-                  <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                    Portfolio
-                  </span></a>
-
-                  <span className="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
-                </li>
-
-                <li className="group pl-6">
-                  <a href="#clients">
-                  <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                    Clients
-                  </span></a>
-
-                  <span className="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
-                </li>
-
-                <li className="group pl-6">
-                  <a href="#work">
-                  <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                    Work
-                  </span> </a>
-
-                  <span className="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
-                </li>
-
-                <li className="group pl-6">
-                  <a href="#statistics">
-                  <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                    Statistics
-                  </span> </a>
-
-                  <span className="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
-                </li>
-
-                <li className="group pl-6">
-                  <a href="./blog">
-                  <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                    Blog
-                  </span></a>
-
-                  <span className="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
-                </li>
-
-                <li className="group pl-6">
-                  <a href="#contact">
-                  <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                    Contact
-                  </span> </a>
-
-                  <span className="block h-0.5 w-full bg-transparent group-hover:bg-yellow"></span>
-                </li>
-              </ul>
-            </div>
-            <div className="block lg:hidden">
-              <button>
-                <i className="bx bx-menu text-4xl text-white"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="pointer-events-none fixed inset-0 z-70 min-h-screen bg-black bg-opacity-70 opacity-0 transition-opacity lg:hidden">
-          <div className="absolute right-0 min-h-screen w-2/3 bg-primary py-4 px-8 shadow md:w-1/3">
-            <button className="absolute top-0 right-0 mt-4 mr-4">
-              <img
-                src="/assets//img/icon-close.svg"
-                className="h-10 w-auto"
-                alt=""
-              />
-            </button>
-
-            <ul className="mt-8 flex flex-col">
-              <li className="py-2">
-                <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                  About
-                </span>
-              </li>
-
-              <li className="py-2">
-                <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                  Services
-                </span>
-              </li>
-
-              <li className="py-2">
-                <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                  Portfolio
-                </span>
-              </li>
-
-              <li className="py-2">
-                <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                  Clients
-                </span>
-              </li>
-
-              <li className="py-2">
-                <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                  Work
-                </span>
-              </li>
-
-              <li className="py-2">
-                <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                  Statistics
-                </span>
-              </li>
-
-              <li className="py-2">
-                <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                  Blog
-                </span>
-              </li>
-
-              <li className="py-2">
-                <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
-                  Contact
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
+        {/* Info section */}
         <div>
+          {/* blur Background image */}
           <div
             className="relative bg-cover bg-center bg-no-repeat py-8"
-            style={{ backgroundImage: "url(publix/assets/img/bg-hero.jpg)" }}
+            style={{ backgroundImage: "url(/assets/img/bg-hero.jpg)" }}
           >
             <div className="absolute inset-0 z-20 bg-gradient-to-r from-hero-gradient-from to-hero-gradient-to bg-cover bg-center bg-no-repeat"></div>
 
             <div className="container relative z-30 pt-20 pb-12 sm:pt-56 sm:pb-48 lg:pt-64 lg:pb-48">
               <div className="flex flex-col items-center justify-center lg:flex-row">
                 <div className="rounded-full border-8 border-primary shadow-xl">
+                  {/* ********* My image ************** */}
                   <img
-                    src= {builder.image(profile.image).width(200).url()}
+                    src={builder.image(profile.image).url()}
                     className="h-48 rounded-full sm:h-56"
                     alt="author"
                   />
                 </div>
+                {/* ********* My Name ********* */}
                 <div className="pt-8 sm:pt-10 lg:pl-8 lg:pt-0">
                   <h1 className="text-center font-header text-4xl text-white sm:text-left sm:text-5xl md:text-6xl">
-                    Hello I'm {profile.name}
+                    Hello, I'm {profile.name} !
                   </h1>
-                  <div className="flex flex-col justify-center pt-3 sm:flex-row sm:pt-5 lg:justify-start">
-                    <div className="flex items-center justify-center pl-0 sm:justify-start md:pl-1">
+                  <div className="flex flex-col justify-center pt-3 sm:flex-row sm:pt-5 lg:justify-start ">
+
+                    <div className="flex items-center justify-center pl-0 sm:justify-start md:pl-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  duration-300">
                       <p className="font-body text-lg uppercase text-white">
                         Let's connect
                       </p>
@@ -293,28 +154,33 @@ export default function Home({ blog, profile }) {
                       </div>
                     </div>
                     <div className="flex items-center justify-center pt-5 pl-2 sm:justify-start sm:pt-0">
-                      <a href="/">
-                        <i className="bx bxl-facebook-square text-2xl text-white hover:text-yellow"></i>
+                      <a href={social.github} className="cursor-pointer" target="_blank">
+                        <i className="bx bxl-github text-2xl text-white transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  duration-300 hover:text-yellow"></i>
                       </a>
-                      <a href="/" className="pl-4">
-                        <i className="bx bxl-twitter text-2xl text-white hover:text-yellow"></i>
+                      <a href={social.medium} className="cursor-pointer pl-4" target="_blank">
+                        <i className="bx bxl-medium text-2xl text-white transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  duration-300 hover:text-yellow"></i>
                       </a>
-                      <a href="/" className="pl-4">
-                        <i className="bx bxl-dribbble text-2xl text-white hover:text-yellow"></i>
+                      <a href={social.linkedin} className="cursor-pointer pl-4" target="_blank">
+                        <i className="bx bxl-linkedin text-2xl text-white transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  duration-300 hover:text-yellow"></i>
                       </a>
-                      <a href="/" className="pl-4">
-                        <i className="bx bxl-linkedin text-2xl text-white hover:text-yellow"></i>
-                      </a>
-                      <a href="/" className="pl-4">
-                        <i className="bx bxl-instagram text-2xl text-white hover:text-yellow"></i>
+                      <a href = {"mailto:"+social.gmail} className="cursor-pointer pl-4" target="_blank">
+                        <i className="bx bxl-gmail text-2xl text-white transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  duration-300 hover:text-yellow"></i>
                       </a>
                     </div>
+                  </div>
+                  <div className="buttons text-center  md:text-left" style={{paddingLeft: '4px'}}>
+                    <Link href={profile.resume}>
+                    <button className="hover:underline decoration-yellow-500 font-body text-lg font-semibold uppercase text-white transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  duration-300">
+                      My Resume
+                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
+          {/* About Section starts */}
           <div className="bg-grey-50" id="about">
             <div className="container flex flex-col items-center py-16 md:py-20 lg:flex-row">
               <div className="w-full text-center sm:w-3/4 lg:w-3/5 lg:text-left">
@@ -322,18 +188,24 @@ export default function Home({ blog, profile }) {
                   Who am I?
                 </h2>
                 <h4 className="pt-6 font-header text-xl font-medium text-black sm:text-2xl lg:text-3xl">
-                  I'm Christy Smith, a Web Designer & Photographer
+                  I'm {profile.name}, {profile.jobRole}.
                 </h4>
-                <p className="pt-6 font-body leading-relaxed text-grey-20">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                </p>
+                <div className="pt-6 font-body leading-relaxed text-grey-20">
+                  <PortableText
+                    // Pass in block content straight from Sanity.io
+                    content={profile.desc}
+                    projectId="jm2xwjzr"
+                    dataset="production"
+                    // Optionally override marks, decorators, blocks, etc. in a flat
+                    // structure without doing any gymnastics
+                    serializers={{
+                      h1: (props) => <h1 style={{ color: "red" }} {...props} />,
+                      li: ({ children }) => (
+                        <li className="special-list-item">{children}</li>
+                      ),
+                    }}
+                  />
+                </div>
                 <div className="flex flex-col justify-center pt-6 sm:flex-row lg:justify-start">
                   <div className="flex items-center justify-center sm:justify-start">
                     <p className="font-body text-lg font-semibold uppercase text-grey-20">
@@ -344,99 +216,54 @@ export default function Home({ blog, profile }) {
                     </div>
                   </div>
                   <div className="flex items-center justify-center pt-5 pl-2 sm:justify-start sm:pt-0">
-                    <a href="/">
-                      <i className="bx bxl-facebook-square text-2xl text-primary hover:text-yellow"></i>
+                    <a href={social.github}>
+                      <i className="bx bxl-github text-2xl text-primary hover:text-yellow"></i>
                     </a>
-                    <a href="/" className="pl-4">
-                      <i className="bx bxl-twitter text-2xl text-primary hover:text-yellow"></i>
+                    <a href={social.medium} className="pl-4">
+                      <i className="bx bxl-medium text-2xl text-primary hover:text-yellow"></i>
                     </a>
-                    <a href="/" className="pl-4">
-                      <i className="bx bxl-dribbble text-2xl text-primary hover:text-yellow"></i>
-                    </a>
-                    <a href="/" className="pl-4">
+                    <a href={social.linkedin} className="pl-4">
                       <i className="bx bxl-linkedin text-2xl text-primary hover:text-yellow"></i>
                     </a>
-                    <a href="/" className="pl-4">
-                      <i className="bx bxl-instagram text-2xl text-primary hover:text-yellow"></i>
+                    <a href={"mailto:"+social.gmail} className="pl-4">
+                      <i className="bx bxl-gmail text-2xl text-primary hover:text-yellow"></i>
                     </a>
                   </div>
                 </div>
               </div>
               <div className="w-full pl-0 pt-10 sm:w-3/4 lg:w-2/5 lg:pl-12 lg:pt-0">
-                <div>
-                  <div className="flex items-end justify-between">
-                    <h4 className="font-body font-semibold uppercase text-black">
-                      HTML & CSS
-                    </h4>
-                    <h3 className="font-body text-3xl font-bold text-primary">
-                      85%
-                    </h3>
+                {skills.map((item) => {
+                  return(
+                    <div className="pt-6">
+                    <div className="flex items-end justify-between">
+                      <h4 className="font-body font-semibold uppercase text-black">
+                        {item.skill_name}
+                      </h4>
+                      <h3 className="font-body text-3xl font-bold text-primary">
+                        {item.skill_perct}
+                      </h3>
+                    </div>
+                    <div className="mt-2 h-3 w-full rounded-full bg-lila">
+                      <div
+                        className="h-3 rounded-full bg-primary"
+                        style={{ width: item.skill_perct }}
+                      ></div>
+                    </div>
                   </div>
-                  <div className="mt-2 h-3 w-full rounded-full bg-lila">
-                    <div
-                      className="h-3 rounded-full bg-primary"
-                      style={{ width: "85%" }}
-                    ></div>
-                  </div>
-                </div>
-                <div className="pt-6">
-                  <div className="flex items-end justify-between">
-                    <h4 className="font-body font-semibold uppercase text-black">
-                      Python
-                    </h4>
-                    <h3 className="font-body text-3xl font-bold text-primary">
-                      70%
-                    </h3>
-                  </div>
-                  <div className="mt-2 h-3 w-full rounded-full bg-lila">
-                    <div
-                      className="h-3 rounded-full bg-primary"
-                      style={{ width: "70%" }}
-                    ></div>
-                  </div>
-                </div>
-                <div className="pt-6">
-                  <div className="flex items-end justify-between">
-                    <h4 className="font-body font-semibold uppercase text-black">
-                      Javascript
-                    </h4>
-                    <h3 className="font-body text-3xl font-bold text-primary">
-                      98%
-                    </h3>
-                  </div>
-                  <div className="mt-2 h-3 w-full rounded-full bg-lila">
-                    <div
-                      className="h-3 rounded-full bg-primary"
-                      style={{ width: "98%" }}
-                    ></div>
-                  </div>
-                </div>
-                <div className="pt-6">
-                  <div className="flex items-end justify-between">
-                    <h4 className="font-body font-semibold uppercase text-black">
-                      Figma
-                    </h4>
-                    <h3 className="font-body text-3xl font-bold text-primary">
-                      91%
-                    </h3>
-                  </div>
-                  <div className="mt-2 h-3 w-full rounded-full bg-lila">
-                    <div
-                      className="h-3 rounded-full bg-primary"
-                      style={{ width: "91%" }}
-                    ></div>
-                  </div>
-                </div>
+                  )
+                })}
+                
               </div>
             </div>
           </div>
+          {/* About Section ends */}
 
           <div className="container py-16 md:py-20" id="services">
             <h2 className="text-center font-header text-4xl font-semibold uppercase text-primary sm:text-5xl lg:text-6xl">
               Here's what I'm good at
             </h2>
             <h3 className="pt-6 text-center font-header text-xl font-medium text-black sm:text-2xl lg:text-3xl">
-              These are the services Ioffer
+              These are the services I offer
             </h3>
 
             <div className="grid grid-cols-1 gap-6 pt-10 sm:grid-cols-2 md:gap-10 md:pt-12 lg:grid-cols-3">
@@ -586,7 +413,7 @@ export default function Home({ blog, profile }) {
               </div>
             </div>
           </div>
-
+{/* Portfolio */}
           <div className="container py-16 md:py-20" id="portfolio">
             <h2 className="text-center font-header text-4xl font-semibold uppercase text-primary sm:text-5xl lg:text-6xl">
               Check out my Portfolio
@@ -639,277 +466,7 @@ export default function Home({ blog, profile }) {
             </div>
           </div>
 
-          <div className="bg-grey-50" id="clients">
-            <div className="container py-16 md:py-20">
-              <div className="mx-auto w-full sm:w-3/4 lg:w-full">
-                <h2 className="text-center font-header text-4xl font-semibold uppercase text-primary sm:text-5xl lg:text-6xl">
-                  My latest clients
-                </h2>
-                <div className="flex flex-wrap items-center justify-center pt-4 sm:pt-4">
-                  <span className="m-8 block">
-                    <img
-                      src="/assets//img/logo-coca-cola.svg"
-                      alt="client logo"
-                      className="mx-auto block h-12 w-auto"
-                    />
-                  </span>
-                  <span className="m-8 block">
-                    <img
-                      src="/assets//img/logo-apple.svg"
-                      alt="client logo"
-                      className="mx-auto block h-12 w-auto"
-                    />
-                  </span>
-
-                  <span className="m-8 block">
-                    <img
-                      src="/assets//img/logo-netflix.svg"
-                      alt="client logo"
-                      className="mx-auto block h-12 w-auto"
-                    />
-                  </span>
-
-                  <span className="m-8 block">
-                    <img
-                      src="/assets//img/logo-amazon.svg"
-                      alt="client logo"
-                      className="mx-auto block h-12 w-auto"
-                    />
-                  </span>
-
-                  <span className="m-8 block">
-                    <img
-                      src="/assets//img/logo-stripe.svg"
-                      alt="client logo"
-                      className="mx-auto block h-12 w-auto"
-                    />
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="container py-16 md:py-20" id="work">
-            <h2 className="text-center font-header text-4xl font-semibold uppercase text-primary sm:text-5xl lg:text-6xl">
-              My work experience
-            </h2>
-            <h3 className="pt-6 text-center font-header text-xl font-medium text-black sm:text-2xl lg:text-3xl">
-              Here's what I did before freelancing
-            </h3>
-
-            <div className="relative mx-auto mt-12 flex w-full flex-col lg:w-2/3">
-              <span className="left-2/5 absolute inset-y-0 ml-10 hidden w-0.5 bg-grey-40 md:block"></span>
-
-              <div className="mt-8 flex flex-col text-center md:flex-row md:text-left">
-                <div className="md:w-2/5">
-                  <div className="flex justify-center md:justify-start">
-                    <span className="shrink-0">
-                      <img
-                        src="/assets//img/logo-spotify.svg"
-                        className="h-auto w-32"
-                        alt="company logo"
-                      />
-                    </span>
-                    <div className="relative ml-3 hidden w-full md:block">
-                      <span className="absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 transform bg-grey-70"></span>
-                    </div>
-                  </div>
-                </div>
-                <div className="md:w-3/5">
-                  <div className="relative flex md:pl-18">
-                    <span className="absolute left-8 top-1 hidden h-4 w-4 rounded-full border-2 border-grey-40 bg-white md:block"></span>
-
-                    <div className="mt-1 flex">
-                      <i className="bx bxs-right-arrow hidden text-primary md:block"></i>
-                      <div className="md:-mt-1 md:pl-8">
-                        <span className="block font-body font-bold text-grey-40">
-                          Apr 2015 - Mar 2018
-                        </span>
-                        <span className="block pt-2 font-header text-xl font-bold uppercase text-primary">
-                          Frontend Developer
-                        </span>
-                        <div className="pt-2">
-                          <span className="block font-body text-black">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Vestibulum mattis felis vitae risus pulvinar
-                            tincidunt. Nam ac venenatis enim.
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-8 flex flex-col text-center md:flex-row md:text-left">
-                <div className="md:w-2/5">
-                  <div className="flex justify-center md:justify-start">
-                    <span className="shrink-0">
-                      <img
-                        src="/assets//img/logo-microsoft.svg"
-                        className="h-auto w-32"
-                        alt="company logo"
-                      />
-                    </span>
-                    <div className="relative ml-3 hidden w-full md:block">
-                      <span className="absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 transform bg-grey-70"></span>
-                    </div>
-                  </div>
-                </div>
-                <div className="md:w-3/5">
-                  <div className="relative flex md:pl-18">
-                    <span className="absolute left-8 top-1 hidden h-4 w-4 rounded-full border-2 border-grey-40 bg-white md:block"></span>
-
-                    <div className="mt-1 flex">
-                      <i className="bx bxs-right-arrow hidden text-primary md:block"></i>
-                      <div className="md:-mt-1 md:pl-8">
-                        <span className="block font-body font-bold text-grey-40">
-                          Mar 2018 - September 2019
-                        </span>
-                        <span className="block pt-2 font-header text-xl font-bold uppercase text-primary">
-                          Software Engineer
-                        </span>
-                        <div className="pt-2">
-                          <span className="block font-body text-black">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Vestibulum mattis felis vitae risus pulvinar
-                            tincidunt. Nam ac venenatis enim.
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-8 flex flex-col text-center md:flex-row md:text-left">
-                <div className="md:w-2/5">
-                  <div className="flex justify-center md:justify-start">
-                    <span className="shrink-0">
-                      <img
-                        src="/assets//img/logo-fedex.svg"
-                        className="h-auto w-32"
-                        alt="company logo"
-                      />
-                    </span>
-                    <div className="relative ml-3 hidden w-full md:block">
-                      <span className="absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 transform bg-grey-70"></span>
-                    </div>
-                  </div>
-                </div>
-                <div className="md:w-3/5">
-                  <div className="relative flex md:pl-18">
-                    <span className="absolute left-8 top-1 hidden h-4 w-4 rounded-full border-2 border-grey-40 bg-white md:block"></span>
-
-                    <div className="mt-1 flex">
-                      <i className="bx bxs-right-arrow hidden text-primary md:block"></i>
-                      <div className="md:-mt-1 md:pl-8">
-                        <span className="block font-body font-bold text-grey-40">
-                          October 2019 - Feb 2021
-                        </span>
-                        <span className="block pt-2 font-header text-xl font-bold uppercase text-primary">
-                          DevOps Engineer
-                        </span>
-                        <div className="pt-2">
-                          <span className="block font-body text-black">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Vestibulum mattis felis vitae risus pulvinar
-                            tincidunt. Nam ac venenatis enim.
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="bg-cover bg-top bg-no-repeat pb-16 md:py-16 lg:py-24"
-            style={{
-              backgroundImage: "url(/assets/img/experience-figure.png)",
-            }}
-            id="statistics"
-          >
-            <div className="container">
-              <div className="mx-auto w-5/6 bg-white py-16 shadow md:w-11/12 lg:py-20 xl:py-24 2xl:w-full">
-                <div className="grid grid-cols-2 gap-5 md:gap-8 xl:grid-cols-4 xl:gap-5">
-                  <div className="flex flex-col items-center justify-center text-center md:flex-row md:text-left">
-                    <div>
-                      <img
-                        src="/assets//img/icon-project.svg"
-                        className="mx-auto h-12 w-auto md:h-20"
-                        alt="icon project"
-                      />
-                    </div>
-                    <div className="pt-5 md:pl-5 md:pt-0">
-                      <h1 className="font-body text-2xl font-bold text-primary md:text-4xl">
-                        12
-                      </h1>
-                      <h4 className="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
-                        Finished Projects
-                      </h4>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col items-center justify-center text-center md:flex-row md:text-left">
-                    <div>
-                      <img
-                        src="/assets//img/icon-award.svg"
-                        className="mx-auto h-12 w-auto md:h-20"
-                        alt="icon award"
-                      />
-                    </div>
-                    <div className="pt-5 md:pl-5 md:pt-0">
-                      <h1 className="font-body text-2xl font-bold text-primary md:text-4xl">
-                        3
-                      </h1>
-                      <h4 className="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
-                        Awards Won
-                      </h4>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 flex flex-col items-center justify-center text-center md:mt-10 md:flex-row md:text-left lg:mt-0">
-                    <div>
-                      <img
-                        src="/assets//img/icon-happy.svg"
-                        className="mx-auto h-12 w-auto md:h-20"
-                        alt="icon happy clients"
-                      />
-                    </div>
-                    <div className="pt-5 md:pl-5 md:pt-0">
-                      <h1 className="font-body text-2xl font-bold text-primary md:text-4xl">
-                        8
-                      </h1>
-                      <h4 className="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
-                        Happy Clients
-                      </h4>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 flex flex-col items-center justify-center text-center md:mt-10 md:flex-row md:text-left lg:mt-0">
-                    <div>
-                      <img
-                        src="/assets//img/icon-puzzle.svg"
-                        className="mx-auto h-12 w-auto md:h-20"
-                        alt="icon puzzle"
-                      />
-                    </div>
-                    <div className="pt-5 md:pl-5 md:pt-0">
-                      <h1 className="font-body text-2xl font-bold text-primary md:text-4xl">
-                        99
-                      </h1>
-                      <h4 className="text-grey-dark font-header text-base font-medium leading-loose md:text-xl">
-                        Bugs Fixed
-                      </h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-{/* Latest blog posts */}
+          {/* Latest blog posts */}
           <div className="bg-grey-50" id="blog">
             <div className="container py-16 md:py-20">
               <h2 className="text-center font-header text-4xl font-semibold uppercase text-primary sm:text-5xl lg:text-6xl">
@@ -936,7 +493,7 @@ export default function Home({ blog, profile }) {
                           style={{
                             backgroundImage: `url(${
                               builder.image(item.image).width(200).url() ||
-                              "/assets/img/bg-cta.jpg"
+                              "/assets/img/post-01.png"
                             })`,
                           }}
                           className="group relative h-72 bg-cover bg-center bg-no-repeat sm:h-84 lg:h-64 xl:h-72"
@@ -958,51 +515,6 @@ export default function Home({ blog, profile }) {
                     </Link>
                   );
                 })}
-
-                {/* Second post */}
-                {/* <a href="/post" className="shadow">
-                  <div
-                    style={{ backgroundImage: "url(/assets/img/post-02.png)" }}
-                    className="group relative h-72 bg-cover bg-center bg-no-repeat sm:h-84 lg:h-64 xl:h-72"
-                  >
-                    <span className="absolute inset-0 block bg-gradient-to-b from-blog-gradient-from to-blog-gradient-to bg-cover bg-center bg-no-repeat opacity-10 transition-opacity group-hover:opacity-50"></span>
-                    <span className="absolute right-0 bottom-0 mr-4 mb-4 block rounded-full border-2 border-white px-6 py-2 text-center font-body text-sm font-bold uppercase text-white md:text-base">
-                      Read More
-                    </span>
-                  </div>
-                  <div className="bg-white py-6 px-5 xl:py-8">
-                    <span className="block font-body text-lg font-semibold text-black">
-                      My personal productivity system
-                    </span>
-                    <span className="block pt-2 font-body text-grey-20">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua.
-                    </span>
-                  </div>
-                </a> */}
-                {/* Third post */}
-                {/* <a href="/post" className="shadow">
-                  <div
-                    style={{ backgroundImage: "url(/assets/img/post-03.png)" }}
-                    className="group relative h-72 bg-cover bg-center bg-no-repeat sm:h-84 lg:h-64 xl:h-72"
-                  >
-                    <span className="absolute inset-0 block bg-gradient-to-b from-blog-gradient-from to-blog-gradient-to bg-cover bg-center bg-no-repeat opacity-10 transition-opacity group-hover:opacity-50"></span>
-                    <span className="absolute right-0 bottom-0 mr-4 mb-4 block rounded-full border-2 border-white px-6 py-2 text-center font-body text-sm font-bold uppercase text-white md:text-base">
-                      Read More
-                    </span>
-                  </div>
-                  <div className="bg-white py-6 px-5 xl:py-8">
-                    <span className="block font-body text-lg font-semibold text-black">
-                      My year in review 2020
-                    </span>
-                    <span className="block pt-2 font-body text-grey-20">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua.
-                    </span>
-                  </div>
-                </a> */}
               </div>
             </div>
           </div>
@@ -1049,19 +561,8 @@ export default function Home({ blog, profile }) {
                 <i className="bx bx-chevron-right relative -right-2 text-3xl"></i>
               </button>
             </form>
-            <div className="flex flex-col pt-16 lg:flex-row">
-              <div className="w-full border-l-2 border-t-2 border-r-2 border-b-2 border-grey-60 px-6 py-6 sm:py-8 lg:w-1/3">
-                <div className="flex items-center">
-                  <i className="bx bx-phone text-2xl text-grey-40"></i>
-                  <p className="pl-2 font-body font-bold uppercase text-grey-40 lg:text-lg">
-                    My Phone
-                  </p>
-                </div>
-                <p className="pt-2 text-left font-body font-bold text-primary lg:text-lg">
-                  (+881) 111 222 333
-                </p>
-              </div>
-              <div className="w-full border-l-2 border-t-0 border-r-2 border-b-2 border-grey-60 px-6 py-6 sm:py-8 lg:w-1/3 lg:border-l-0 lg:border-t-2">
+            <div className="flex flex-col pt-16 lg:flex-row justify-center">
+              <div className="w-full border-l-2 border-t-2 border-r-2 border-b-2 border-grey-60 px-6 py-6 sm:py-8 lg:w-1/3 lg:border-l-2 lg:border-t-2">
                 <div className="flex items-center">
                   <i className="bx bx-envelope text-2xl text-grey-40"></i>
                   <p className="pl-2 font-body font-bold uppercase text-grey-40 lg:text-lg">
@@ -1076,87 +577,46 @@ export default function Home({ blog, profile }) {
                 <div className="flex items-center">
                   <i className="bx bx-map text-2xl text-grey-40"></i>
                   <p className="pl-2 font-body font-bold uppercase text-grey-40 lg:text-lg">
-                    My Address
+                    My Location
                   </p>
                 </div>
                 <p className="pt-2 text-left font-body font-bold text-primary lg:text-lg">
-                  123 New York D Block 1100, 2011 USA
+                  Mumbai, Maharashtra
                 </p>
               </div>
             </div>
           </div>
+        </div>
 
-          <div
-            className="h-72 bg-cover bg-center bg-no-repeat sm:h-64 md:h-72 lg:h-96"
-            style={{ backgroundImage: "url(/assets/img/map.png)" }}
-          ></div>
-
-          <div
-            className="relative bg-primary bg-cover bg-center bg-no-repeat py-16 bg-blend-multiply lg:py-24"
-            style={{ backgroundImage: "url(/assets/img/bg-cta.jpg)" }}
+        {/* Scroller */}
+        <div>
+          <button
+            type="button"
+            data-mdb-ripple="true"
+            data-mdb-ripple-color="light"
+            className="inline-block p-3 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out bottom-5 right-5 delay-150 hover:-translate-y-1 hover:scale-110 animate-bounce"
+            id="btn-back-to-top"
+            style={{ position: "fixed", display: "none" }}
           >
-            <div className="container relative z-30">
-              <h3 className="text-center font-header text-3xl uppercase leading-tight tracking-wide text-white sm:text-4xl lg:text-5xl">
-                Keep <span className="font-bold">up-to-date</span> <br />
-                with what I'm up to
-              </h3>
-              <form className="mt-6 flex flex-col justify-center sm:flex-row">
-                <input
-                  className="w-full rounded px-4 py-3 font-body text-black sm:w-2/5 sm:py-4 lg:w-1/3"
-                  type="text"
-                  id="email"
-                  placeholder="Give me your Email"
-                />
-                <button className="mt-2 rounded bg-yellow px-8 py-3 font-body text-base font-bold uppercase text-primary transition-colors hover:bg-primary hover:text-white focus:border-transparent focus:outline-none focus:ring focus:ring-yellow sm:ml-2 sm:mt-0 sm:py-4 md:text-lg">
-                  Join the club
-                </button>
-              </form>
-            </div>
-          </div>
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fas"
+              className="w-4 h-4"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+            >
+              <path
+                fill="currentColor"
+                d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"
+              ></path>
+            </svg>
+          </button>
         </div>
 
-        <div className="bg-primary">
-          <div className="container flex flex-col justify-between py-6 sm:flex-row">
-            <p className="text-center font-body text-white md:text-left">
-              © Copyright 2022. All right reserved, ATOM.
-            </p>
-            <div className="flex items-center justify-center pt-5 sm:justify-start sm:pt-0">
-              <a href="/">
-                <i className="bx bxl-facebook-square text-2xl text-white hover:text-yellow"></i>
-              </a>
-              <a href="/" className="pl-4">
-                <i className="bx bxl-twitter text-2xl text-white hover:text-yellow"></i>
-              </a>
-              <a href="/" className="pl-4">
-                <i className="bx bxl-dribbble text-2xl text-white hover:text-yellow"></i>
-              </a>
-              <a href="/" className="pl-4">
-                <i className="bx bxl-linkedin text-2xl text-white hover:text-yellow"></i>
-              </a>
-              <a href="/" className="pl-4">
-                <i className="bx bxl-instagram text-2xl text-white hover:text-yellow"></i>
-              </a>
-            </div>
-          </div>
-        </div>
+        <Footer socialLinks = {social}/>
       </div>
-
-      {/* <div>
-        <PortableText
-          // Pass in block content straight from Sanity.io
-          content={blog[0].content}
-          projectId= "jm2xwjzr"
-          dataset= "production"
-          // Optionally override marks, decorators, blocks, etc. in a flat
-          // structure without doing any gymnastics
-          serializers={{
-            h1: (props) => <h1 style={{ color: "red" }} {...props} />,
-            li: ({ children }) => (
-              <li className="special-list-item">{children}</li>
-            ),
-          }}
-        />
-        </div> */}
     </>
   );
 }
@@ -1171,11 +631,20 @@ export async function getServerSideProps(context) {
   const blog = await client.fetch(query);
 
   const profileQuery = `*[_type == "profile"][0]`;
-  const profile = await client.fetch(profileQuery)
+  const profile = await client.fetch(profileQuery);
+
+  const socialQuery = `*[_type == "social"][0]`;
+  const social = await client.fetch(socialQuery);
+
+  const skillsQuery = `*[_type == "skills"]`;
+  const skills = await client.fetch(skillsQuery);
+
   return {
     props: {
       blog,
-      profile
+      profile,
+      social,
+      skills
     },
   };
 }

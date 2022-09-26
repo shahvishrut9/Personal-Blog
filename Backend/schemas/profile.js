@@ -14,9 +14,27 @@ export default {
             title: 'Name',
         },
         {
+            name: 'desc',
+            title: 'Profile Description',
+            type: 'array',
+            of: [
+              {
+                type: 'block'
+              }
+            ]
+          },
+        {
+            name: 'resume',
+            type: 'string',
+            title: 'Resume',
+        },
+        {
             name: 'image',
             type: 'image',
             title: 'Image',
+            options: {
+                hotspot:true
+            }
         },
 
     ]
