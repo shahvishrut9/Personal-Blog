@@ -2,7 +2,7 @@
 import Head from "next/head";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
-import SyntaxHighlighter from 'react-syntax-highlighter';
+import SyntaxHighlighter from "react-syntax-highlighter";
 
 // Sanity Requirements
 import { createClient } from "next-sanity";
@@ -11,24 +11,73 @@ import PortableText from "react-portable-text";
 
 // miscellaneous
 import moment from "moment";
+import getYouTubeID from "get-youtube-id";
 
-const BlockContent = require("@sanity/block-content-to-react");
+// Exp imports
+import { PortableText as PortableTextReact } from "@portabletext/react";
+import { getImageDimensions } from "@sanity/asset-utils";
 
-const serializers = {
+const myConfiguredSanityClient = createClient({
+  projectId: "jm2xwjzr",
+  dataset: "production",
+  useCdn: false,
+});
+const builder = imageUrlBuilder(myConfiguredSanityClient);
 
+const SampleImageComponent = ({ value, isInline }) => {
+  const { width, height } = getImageDimensions(value);
+
+  return (
+    <img
+      src={builder.image(value).url()}
+      alt={value.alt || " "}
+      loading="lazy"
+      style={{
+        display: isInline ? "inline-block" : "block",
+        marginLeft: "auto",
+        marginRight: "auto",
+        width: "50%",
+        aspectRatio: width / height,
+      }}
+    />
+  );
+};
+
+const myPortableTextComponents = {
   types: {
-    code: ({node = {}}) => {
-      const {code, language} = node
-      if(!code){
-        return null
-      }
+    image: SampleImageComponent,
+    code: (node) => {
+      const { code, language } = node.value;
+      return (
+        <SyntaxHighlighter language={language || "text"}>
+          {code}
+        </SyntaxHighlighter>
+      );
+    },
+    youtube: (yt) => {
+      const { url } = yt.value;
+      const id = getYouTubeID(url);
+      const yturl = `https://www.youtube.com/embed/${id}`;
 
-      return <SyntaxHighlighter language={language || 'text'}>{code}</SyntaxHighlighter>
+return (
+        <div style={{overFlow: "hidden", paddingBottom: "56.25%", position: "relative", height: "0"}}>
+        <iframe
+          width="560"
+          height="315"
+          src= {yturl}
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          style={{left: "0", top: "0", height: "100%", width: "100%", position: "absolute"}}
+        ></iframe>
+        </div>
+);
     },
   },
 };
 
 const Post = ({ blog, profile, social }) => {
+  console.log(blog.content)
   const myConfiguredSanityClient = createClient({
     projectId: "jm2xwjzr",
     dataset: "production",
@@ -52,7 +101,7 @@ const Post = ({ blog, profile, social }) => {
 
         <meta
           property="og:title"
-          content="How to become a frontend developer | Atom Template"
+          content="Vishrut The Analyst"
         />
 
         <meta property="og:locale" content="en_US" />
@@ -66,11 +115,11 @@ const Post = ({ blog, profile, social }) => {
           content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         />
 
-        <link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+        <link rel="icon" type="image/png" href="/assets/img/title.jpeg" />
 
         <meta name="theme-color" content="#5540af" />
 
-        <meta property="og:site_name" content="Atom Template" />
+        <meta property="og:site_name" content="Vishrut The Analyst" />
 
         <meta property="og:image" content="//assets/img/social.jpg" />
 
@@ -125,9 +174,9 @@ const Post = ({ blog, profile, social }) => {
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
       </Head>
 
-      <div id="main" class="relative">
+      <div id="main" className="relative">
         <div>
-          <NavBar backgroundColor="#4a389c" />
+          <NavBar backgroundColor="#30767b" />
           <div>
             <div className="container py-6 md:py-10">
               <div className="mx-auto max-w-4xl" style={{ marginTop: "7rem" }}>
@@ -148,19 +197,21 @@ const Post = ({ blog, profile, social }) => {
                         By {profile.name}
                       </span>
                       <span className="block pt-1 font-body text-xl font-bold text-grey-30">
-                        {moment(blog.Time).format("MMMM DD YYYY")}
+                        {moment(blog.date).format("MMMM DD YYYY")}
                       </span>
                     </div>
                   </div>
                 </div>
                 {/* *************** Blog Content *************** */}
-                <div className="prose max-w-none pt-8">
-                  <BlockContent
-                    blocks={blog.content}
-                    imageOptions={{w: 320, h: 240, fit: 'max'}}
-                    serializers={serializers}
-                    projectId = "4jggrkm3"
-                    dataset = "production"
+                <div
+                  className="prose max-w-none pt-8 "
+                  id="blogBodyContent"
+                  style={{}}
+                >
+                  {console.log(blog.content)}
+                  <PortableTextReact
+                    value={blog.content}
+                    components={myPortableTextComponents}
                   />
                 </div>
 
@@ -177,21 +228,7 @@ const Post = ({ blog, profile, social }) => {
                     );
                   })}
                 </div>
-                <div className="mt-10 flex justify-between border-t border-lila py-12">
-                  <a href="/" className="flex items-center">
-                    <i className="bx bx-left-arrow-alt text-2xl text-primary"></i>
-                    <span className="block pl-2 font-body text-lg font-bold uppercase text-primary md:pl-5">
-                      Previous Post
-                    </span>
-                  </a>
-                  <a href="/" className="flex items-center">
-                    <span className="block pr-2 font-body text-lg font-bold uppercase text-primary md:pr-5">
-                      Next Post
-                    </span>
-                    <i className="bx bx-right-arrow-alt text-2xl text-primary"></i>
-                  </a>
-                </div>
-                <div className="flex flex-col items-center border-t border-lila py-12 pt-12 md:flex-row md:items-start xl:pb-20">
+                <div className="mt-10 flex flex-col items-center border-t border-lila py-12 pt-12 md:flex-row md:items-start xl:pb-20">
                   <div className="w-3/4 sm:w-2/5 lg:w-1/4 xl:w-1/5">
                     <img
                       src={builder.image(profile.image).url()}
@@ -231,7 +268,7 @@ const Post = ({ blog, profile, social }) => {
                       <a href={social.linkedin} className="pl-4">
                         <i className="bx bxl-linkedin text-2xl text-primary hover:text-yellow"></i>
                       </a>
-                      <a href={"mailto:"+social.gmail} className="pl-4">
+                      <a href={"mailto:" + social.gmail} className="pl-4">
                         <i className="bx bxl-gmail text-2xl text-primary hover:text-yellow"></i>
                       </a>
                     </div>

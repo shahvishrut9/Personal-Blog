@@ -1,11 +1,3 @@
-// Color pallete
-// #1A1A1D : rgb(26, 26, 29)
-// #4E4E50 : rgb(78, 78, 80)
-// #6F2232 : rgb(111, 34, 50)
-// #950740 : rgb(149, 7, 80)
-// #C3073F : rgb(195, 7, 63)
-// #070e18
-
 // Next js compenents
 import Head from "next/head";
 import Script from "next/script";
@@ -13,16 +5,15 @@ import Link from "next/link";
 import PortableText from "react-portable-text";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
-// import ButtonMailto from "../components/buttonMailto";
+import React, { useRef } from 'react';
+import emailjs from '@emailjs/browser';
 
-// CSS for Home page
-// import styles from "../styles/Home.module.css";
 
 // Sanity associated modules
 import { createClient } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 
-export default function Home({ blog, profile, social, skills }) {
+export default function Home({ blog, profile, social, skills, project }) {
 
   const myConfiguredSanityClient = createClient({
     projectId: "jm2xwjzr",
@@ -30,6 +21,22 @@ export default function Home({ blog, profile, social, skills }) {
     useCdn: false,
   });
   const builder = imageUrlBuilder(myConfiguredSanityClient);
+
+  // Form Function
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm('service_1v8wisb', 'template_09abx32', form.current, 'FESnZBWtgh-2ZYA51')
+      .then((result) => {
+          console.log(result.text);
+      }, (error) => {
+          console.log(error.text);
+      });
+      e.target.reset()
+  };
+
 
   return (
     <>
@@ -46,7 +53,7 @@ export default function Home({ blog, profile, social, skills }) {
 
         <title>{profile.title}</title>
 
-        <meta property="og:title" content="Homepage | Atom Template" />
+        <meta property="og:title" content="Homepage | Vishrut the Analyst" />
 
         <meta property="og:locale" content="en_US" />
 
@@ -59,11 +66,11 @@ export default function Home({ blog, profile, social, skills }) {
           content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         />
 
-        <link rel="icon" type="image/png" href="/assets//img/favicon.png" />
+        <link rel="icon" type="image/png" href="/assets//img/title.jpeg" />
 
         <meta name="theme-color" content="#5540af" />
 
-        <meta property="og:site_name" content="Atom Template" />
+        <meta property="og:site_name" content="Vishrut The Analyst" />
 
         <meta property="og:image" content="//assets/img/social.jpg" />
 
@@ -87,13 +94,10 @@ export default function Home({ blog, profile, social, skills }) {
           href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Raleway:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
-        {/* social media icons from here. */}
         <link
           href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
           rel="stylesheet"
         />
-
-        {/* Style sheets import here */}
         <link
           crossOrigin="anonymous"
           href="/assets//styles/main.min.css"
@@ -113,38 +117,28 @@ export default function Home({ blog, profile, social, skills }) {
 
         <Script src="/assets//js//main.js"></Script>
       </Head>
-
-      {/* ==================================================== */}
       <div id="main" className="relative">
-
         <NavBar />
-
-        {/* Info section */}
         <div>
-          {/* blur Background image */}
           <div
             className="relative bg-cover bg-center bg-no-repeat py-8"
             style={{ backgroundImage: "url(/assets/img/bg-hero.jpg)" }}
           >
             <div className="absolute inset-0 z-20 bg-gradient-to-r from-hero-gradient-from to-hero-gradient-to bg-cover bg-center bg-no-repeat"></div>
-
             <div className="container relative z-30 pt-20 pb-12 sm:pt-56 sm:pb-48 lg:pt-64 lg:pb-48">
               <div className="flex flex-col items-center justify-center lg:flex-row">
-                <div className="rounded-full border-8 border-primary shadow-xl">
-                  {/* ********* My image ************** */}
+                <div>
                   <img
                     src={builder.image(profile.image).url()}
                     className="h-48 rounded-full sm:h-56"
                     alt="author"
                   />
                 </div>
-                {/* ********* My Name ********* */}
                 <div className="pt-8 sm:pt-10 lg:pl-8 lg:pt-0">
                   <h1 className="text-center font-header text-4xl text-white sm:text-left sm:text-5xl md:text-6xl">
                     Hello, I'm {profile.name} !
                   </h1>
                   <div className="flex flex-col justify-center pt-3 sm:flex-row sm:pt-5 lg:justify-start ">
-
                     <div className="flex items-center justify-center pl-0 sm:justify-start md:pl-1 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110  duration-300">
                       <p className="font-body text-lg uppercase text-white">
                         Let's connect
@@ -179,8 +173,6 @@ export default function Home({ blog, profile, social, skills }) {
               </div>
             </div>
           </div>
-
-          {/* About Section starts */}
           <div className="bg-grey-50" id="about">
             <div className="container flex flex-col items-center py-16 md:py-20 lg:flex-row">
               <div className="w-full text-center sm:w-3/4 lg:w-3/5 lg:text-left">
@@ -188,16 +180,13 @@ export default function Home({ blog, profile, social, skills }) {
                   Who am I?
                 </h2>
                 <h4 className="pt-6 font-header text-xl font-medium text-black sm:text-2xl lg:text-3xl">
-                  I'm {profile.name}, {profile.jobRole}.
+                  I'm {profile.name} {profile.jobRole}
                 </h4>
                 <div className="pt-6 font-body leading-relaxed text-grey-20">
                   <PortableText
-                    // Pass in block content straight from Sanity.io
                     content={profile.desc}
                     projectId="jm2xwjzr"
                     dataset="production"
-                    // Optionally override marks, decorators, blocks, etc. in a flat
-                    // structure without doing any gymnastics
                     serializers={{
                       h1: (props) => <h1 style={{ color: "red" }} {...props} />,
                       li: ({ children }) => (
@@ -252,168 +241,9 @@ export default function Home({ blog, profile, social, skills }) {
                   </div>
                   )
                 })}
-                
               </div>
             </div>
           </div>
-          {/* About Section ends */}
-
-          <div className="container py-16 md:py-20" id="services">
-            <h2 className="text-center font-header text-4xl font-semibold uppercase text-primary sm:text-5xl lg:text-6xl">
-              Here's what I'm good at
-            </h2>
-            <h3 className="pt-6 text-center font-header text-xl font-medium text-black sm:text-2xl lg:text-3xl">
-              These are the services I offer
-            </h3>
-
-            <div className="grid grid-cols-1 gap-6 pt-10 sm:grid-cols-2 md:gap-10 md:pt-12 lg:grid-cols-3">
-              <div className="group rounded px-8 py-12 shadow hover:bg-primary">
-                <div className="mx-auto h-24 w-24 text-center xl:h-28 xl:w-28">
-                  <div className="hidden group-hover:block">
-                    <img
-                      src="/assets//img/icon-development-white.svg"
-                      alt="development icon"
-                    />
-                  </div>
-                  <div className="block group-hover:hidden">
-                    <img
-                      src="/assets//img/icon-development-black.svg"
-                      alt="development icon"
-                    />
-                  </div>
-                </div>
-                <div className="text-center">
-                  <h3 className="pt-8 text-lg font-semibold uppercase text-primary group-hover:text-yellow lg:text-xl">
-                    WEB DEVELOPMENT
-                  </h3>
-                  <p className="text-grey pt-4 text-sm group-hover:text-white md:text-base">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  </p>
-                </div>
-              </div>
-              <div className="group rounded px-8 py-12 shadow hover:bg-primary">
-                <div className="mx-auto h-24 w-24 text-center xl:h-28 xl:w-28">
-                  <div className="hidden group-hover:block">
-                    <img
-                      src="/assets//img/icon-content-white.svg"
-                      alt="content marketing icon"
-                    />
-                  </div>
-                  <div className="block group-hover:hidden">
-                    <img
-                      src="/assets//img/icon-content-black.svg"
-                      alt="content marketing icon"
-                    />
-                  </div>
-                </div>
-                <div className="text-center">
-                  <h3 className="pt-8 text-lg font-semibold uppercase text-primary group-hover:text-yellow lg:text-xl">
-                    Technical Writing
-                  </h3>
-                  <p className="text-grey pt-4 text-sm group-hover:text-white md:text-base">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  </p>
-                </div>
-              </div>
-              <div className="group rounded px-8 py-12 shadow hover:bg-primary">
-                <div className="mx-auto h-24 w-24 text-center xl:h-28 xl:w-28">
-                  <div className="hidden group-hover:block">
-                    <img
-                      src="/assets//img/icon-mobile-white.svg"
-                      alt="Mobile Application icon"
-                    />
-                  </div>
-                  <div className="block group-hover:hidden">
-                    <img
-                      src="/assets//img/icon-mobile-black.svg"
-                      alt="Mobile Application icon"
-                    />
-                  </div>
-                </div>
-                <div className="text-center">
-                  <h3 className="pt-8 text-lg font-semibold uppercase text-primary group-hover:text-yellow lg:text-xl">
-                    Mobile Development
-                  </h3>
-                  <p className="text-grey pt-4 text-sm group-hover:text-white md:text-base">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  </p>
-                </div>
-              </div>
-              <div className="group rounded px-8 py-12 shadow hover:bg-primary">
-                <div className="mx-auto h-24 w-24 text-center xl:h-28 xl:w-28">
-                  <div className="hidden group-hover:block">
-                    <img
-                      src="/assets//img/icon-email-white.svg"
-                      alt="Email Marketing icon"
-                    />
-                  </div>
-                  <div className="block group-hover:hidden">
-                    <img
-                      src="/assets//img/icon-email-black.svg"
-                      alt="Email Marketing icon"
-                    />
-                  </div>
-                </div>
-                <div className="text-center">
-                  <h3 className="pt-8 text-lg font-semibold uppercase text-primary group-hover:text-yellow lg:text-xl">
-                    Email Development
-                  </h3>
-                  <p className="text-grey pt-4 text-sm group-hover:text-white md:text-base">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  </p>
-                </div>
-              </div>
-              <div className="group rounded px-8 py-12 shadow hover:bg-primary">
-                <div className="mx-auto h-24 w-24 text-center xl:h-28 xl:w-28">
-                  <div className="hidden group-hover:block">
-                    <img
-                      src="/assets//img/icon-design-white.svg"
-                      alt="Theme Design icon"
-                    />
-                  </div>
-                  <div className="block group-hover:hidden">
-                    <img
-                      src="/assets//img/icon-design-black.svg"
-                      alt="Theme Design icon"
-                    />
-                  </div>
-                </div>
-                <div className="text-center">
-                  <h3 className="pt-8 text-lg font-semibold uppercase text-primary group-hover:text-yellow lg:text-xl">
-                    Graphic Design
-                  </h3>
-                  <p className="text-grey pt-4 text-sm group-hover:text-white md:text-base">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  </p>
-                </div>
-              </div>
-              <div className="group rounded px-8 py-12 shadow hover:bg-primary">
-                <div className="mx-auto h-24 w-24 text-center xl:h-28 xl:w-28">
-                  <div className="hidden group-hover:block">
-                    <img
-                      src="/assets//img/icon-graphics-white.svg"
-                      alt="Graphic Design icon"
-                    />
-                  </div>
-                  <div className="block group-hover:hidden">
-                    <img
-                      src="/assets//img/icon-graphics-black.svg"
-                      alt="Graphic Design icon"
-                    />
-                  </div>
-                </div>
-                <div className="text-center">
-                  <h3 className="pt-8 text-lg font-semibold uppercase text-primary group-hover:text-yellow lg:text-xl">
-                    Web Design
-                  </h3>
-                  <p className="text-grey pt-4 text-sm group-hover:text-white md:text-base">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-{/* Portfolio */}
           <div className="container py-16 md:py-20" id="portfolio">
             <h2 className="text-center font-header text-4xl font-semibold uppercase text-primary sm:text-5xl lg:text-6xl">
               Check out my Portfolio
@@ -421,52 +251,42 @@ export default function Home({ blog, profile, social, skills }) {
             <h3 className="pt-6 text-center font-header text-xl font-medium text-black sm:text-2xl lg:text-3xl">
               Here's what I have done with the past
             </h3>
-
             <div className="mx-auto grid w-full grid-cols-1 gap-8 pt-12 sm:w-3/4 md:gap-10 lg:w-full lg:grid-cols-2">
-              <a
-                href="/"
-                className="mx-auto transform transition-all hover:scale-105 md:mx-0"
-              >
-                <img
-                  src="/assets//img/portfolio-apple.jpeg"
-                  className="w-full shadow"
-                  alt="portfolio image"
-                />
-              </a>
-              <a
-                href="/"
-                className="mx-auto transform transition-all hover:scale-105 md:mx-0"
-              >
-                <img
-                  src="/assets//img/portfolio-stripe.jpeg"
-                  className="w-full shadow"
-                  alt="portfolio image"
-                />
-              </a>
-              <a
-                href="/"
-                className="mx-auto transform transition-all hover:scale-105 md:mx-0"
-              >
-                <img
-                  src="/assets//img/portfolio-fedex.jpeg"
-                  className="w-full shadow"
-                  alt="portfolio image"
-                />
-              </a>
-              <a
-                href="/"
-                className="mx-auto transform transition-all hover:scale-105 md:mx-0"
-              >
-                <img
-                  src="/assets//img/portfolio-microsoft.jpeg"
-                  className="w-full shadow"
-                  alt="portfolio image"
-                />
-              </a>
-            </div>
+          {project.map((item) => {
+            return (
+              <>
+                 <article className="relative rounded-lg shadow-xl bg-white p-16 transform transition-all hover:scale-105 md:mx-0 hover:bg-stone-200">
+                  <h3 className="text-gray-800 text-3xl font-bold mb-2 hover:text-red-700">
+                    {item.project_title}
+                  </h3>
+                  <div className="text-gray-500 text-xs space-x-4">
+                    <span>
+                      <strong className="font-bold">Type</strong>:&nbsp;
+                      <span className="ml-1 px-1 border rounded bg-slate-200">{item.project_type}</span>
+                    </span>
+                    <div className="my-6 text-lg text-gray-700 leading-relaxed">
+                      <PortableText
+                        content={item.project_desc}
+                        projectId="4jggrkm3"
+                        dataset="production"
+                      />
+                    </div>
+                    <Link href={item.project_link}>
+                      <a
+                        className="text-red-500 font-bold hover:underline hover:text-red-400"
+                        target="_blank"
+                      >
+                        Project Link
+                      </a>
+                    </Link>
+                    <span></span>
+                  </div>
+                </article>
+              </>
+            );
+          })}
+        </div>
           </div>
-
-          {/* Latest blog posts */}
           <div className="bg-grey-50" id="blog">
             <div className="container py-16 md:py-20">
               <h2 className="text-center font-header text-4xl font-semibold uppercase text-primary sm:text-5xl lg:text-6xl">
@@ -476,10 +296,7 @@ export default function Home({ blog, profile, social, skills }) {
                 Check out my latest posts!
               </h4>
               <div className="mx-auto grid w-full grid-cols-1 gap-6 pt-12 sm:w-3/4 lg:w-full lg:grid-cols-3 xl:gap-10">
-                {/* First post */}
-
                 {blog.map((item) => {
-                  // appends the slug to the url
                   return (
                     <Link
                       key={item.slug.current}
@@ -488,8 +305,6 @@ export default function Home({ blog, profile, social, skills }) {
                     >
                       <div>
                         <div
-                          // careating variable; fetching images from item object; if null set the deafult image.
-                          // builder is the sanity object defined above.
                           style={{
                             backgroundImage: `url(${
                               builder.image(item.image).width(200).url() ||
@@ -499,7 +314,7 @@ export default function Home({ blog, profile, social, skills }) {
                           className="group relative h-72 bg-cover bg-center bg-no-repeat sm:h-84 lg:h-64 xl:h-72"
                         >
                           <span className="absolute inset-0 block bg-gradient-to-b from-blog-gradient-from to-blog-gradient-to bg-cover bg-center bg-no-repeat opacity-10 transition-opacity group-hover:opacity-50"></span>
-                          <span className="absolute right-0 bottom-0 mr-4 mb-4 block rounded-full border-2 border-white px-6 py-2 text-center font-body text-sm font-bold uppercase text-white md:text-base cursor-pointer">
+                          <span className="absolute right-0 bottom-0 mr-4 mb-4 block rounded-full border-2 border-white px-6 py-2 text-center font-body text-sm font-bold uppercase bg-cyan-700 text-white md:text-base cursor-pointer">
                             Read More
                           </span>
                         </div>
@@ -521,40 +336,45 @@ export default function Home({ blog, profile, social, skills }) {
 
           <div className="container py-16 md:py-20" id="contact">
             <h2 className="text-center font-header text-4xl font-semibold uppercase text-primary sm:text-5xl lg:text-6xl">
-              Here's a contact form
+            Contact Form
             </h2>
             <h4 className="pt-6 text-center font-header text-xl font-medium text-black sm:text-2xl lg:text-3xl">
               Have Any Questions?
             </h4>
             <div className="mx-auto w-full pt-5 text-center sm:w-2/3 lg:pt-6">
               <p className="font-body text-grey-10">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit hendrerit
-                condimentum turpis nisl sem, viverra habitasse urna ante
-                lobortis fermentum accumsan. Viverra habitasse urna ante
-                lobortis fermentum accumsan.
+                Here's you can contact me for further queries or projects 
               </p>
             </div>
-            <form className="mx-auto w-full pt-10 sm:w-3/4">
+            <form className="mx-auto w-full pt-10 sm:w-3/4" ref={form} onSubmit={sendEmail}>
               <div className="flex flex-col md:flex-row">
                 <input
-                  className="mr-3 w-full rounded border-grey-50 px-4 py-3 font-body text-black md:w-1/2 lg:mr-5"
+                  className="mr-3 w-full rounded border-emerald-900 px-4 py-3 font-body text-black md:w-1/2 lg:mr-5"
                   placeholder="Name"
                   type="text"
                   id="name"
+                  name= "name"
+                  required
                 />
                 <input
-                  className="mt-6 w-full rounded border-grey-50 px-4 py-3 font-body text-black md:mt-0 md:ml-3 md:w-1/2 lg:ml-5"
+                  className="mt-6 w-full rounded border-emerald-900 px-4 py-3 font-body text-black md:mt-0 md:ml-3 md:w-1/2 lg:ml-5"
                   placeholder="Email"
-                  type="text"
+                  type="email"
                   id="email"
+                  name= "email"
+                  required
+                  minLength="5"
                 />
               </div>
               <textarea
-                className="mt-6 w-full rounded border-grey-50 px-4 py-3 font-body text-black md:mt-8"
+                className="mt-8 w-full rounded border-emerald-900 px-4 py-3 font-body text-black md:mt-8"
                 placeholder="Message"
                 id="message"
                 cols="30"
-                rows="10"
+                rows="5"
+                name="message"
+                required
+                minLength="5"
               ></textarea>
               <button className="mt-6 flex items-center justify-center rounded bg-primary px-8 py-3 font-header text-lg font-bold uppercase text-white hover:bg-grey-20">
                 Send
@@ -570,7 +390,7 @@ export default function Home({ blog, profile, social, skills }) {
                   </p>
                 </div>
                 <p className="pt-2 text-left font-body font-bold text-primary lg:text-lg">
-                  name@mydomain.com
+                  vs.vishrut@gmail.com
                 </p>
               </div>
               <div className="w-full border-l-2 border-t-0 border-r-2 border-b-2 border-grey-60 px-6 py-6 sm:py-8 lg:w-1/3 lg:border-l-0 lg:border-t-2">
@@ -587,14 +407,12 @@ export default function Home({ blog, profile, social, skills }) {
             </div>
           </div>
         </div>
-
-        {/* Scroller */}
         <div>
           <button
             type="button"
             data-mdb-ripple="true"
             data-mdb-ripple-color="light"
-            className="inline-block p-3 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out bottom-5 right-5 delay-150 hover:-translate-y-1 hover:scale-110 animate-bounce"
+            className="inline-block p-3 bg-cyan-800 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out bottom-5 right-5 delay-150 hover:-translate-y-1 hover:scale-110 animate-bounce"
             id="btn-back-to-top"
             style={{ position: "fixed", display: "none" }}
           >
@@ -614,7 +432,6 @@ export default function Home({ blog, profile, social, skills }) {
             </svg>
           </button>
         </div>
-
         <Footer socialLinks = {social}/>
       </div>
     </>
@@ -638,13 +455,17 @@ export async function getServerSideProps(context) {
 
   const skillsQuery = `*[_type == "skills"]`;
   const skills = await client.fetch(skillsQuery);
+  
+  const projectQuery = `*[_type == "projects"] | order(_createdAt desc)[0...2]`;
+  const project = await client.fetch(projectQuery);
 
   return {
     props: {
       blog,
       profile,
       social,
-      skills
+      skills,
+      project
     },
   };
 }

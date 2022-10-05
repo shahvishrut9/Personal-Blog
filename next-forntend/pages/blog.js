@@ -37,17 +37,17 @@ const Blogs = ({ blog }) => {
         />
 
         <title>Blogs</title>
-        <link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+        <link rel="icon" type="image/png" href="/assets/img/title.jpeg" />
       </Head>
 
-        <NavBar backgroundColor = "#4a389c"/>
+        <NavBar backgroundColor = "#30767b"/>
         <div className="my-12" id="blog">
           <div className="container mx-auto py-16 md:py-20">
             <h2 className="text-center font-header text-4xl font-semibold uppercase text-primary sm:text-5xl lg:text-6xl">
-              I also like to write
+              BLOGS
             </h2>
             <h4 className="pt-6 text-center font-header text-xl font-medium text-black sm:text-2xl lg:text-3xl">
-              Check out my latest posts!
+              Check out my articles
             </h4>
             {/*  className="mx-auto grid w-full grid-cols-1 gap-6 pt-12 sm:w-3/4 lg:w-full lg:grid-cols-3 xl:gap-10"  */}
 
@@ -74,7 +74,7 @@ const Blogs = ({ blog }) => {
                       >
                         <span className="absolute inset-0 block bg-gradient-to-b from-blog-gradient-from to-blog-gradient-to bg-cover bg-center bg-no-repeat opacity-10 transition-opacity group-hover:opacity-50"></span>
                         {/* Change button css here. */}
-                        <span className="absolute right-0 bottom-0 mr-4 mb-4 block rounded-full border-2 bg-purple-700 border-purple-700 px-6 py-2 text-center font-body text-sm font-bold uppercase text-purple-200 md:text-base cursor-pointer">
+                        <span className="absolute right-0 bottom-0 mr-4 mb-4 block rounded-full border-4 bg-teal-800 border-stone-900 px-6 py-2 text-center font-body text-sm font-bold uppercase text-purple-200 md:text-base cursor-pointer">
                           Read More
                         </span>
                       </div>
